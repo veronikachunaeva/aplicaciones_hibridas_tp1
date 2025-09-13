@@ -1,0 +1,17 @@
+{
+  "name": "link-note",
+  "version": "1.0.0",
+  "description": "LinkNote es una aplicación que combina lo mejor de un bloc de notas digital, una herramienta de organización visual estilo kanban, y un gestor de enlaces. Está diseñada para ayudarte a capturar ideas, guardar enlaces importantes, organizar tareas y gestionar tu conocimiento personal de forma clara y estructurada.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chunaeva Veronika",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.1"
+  }
+}
