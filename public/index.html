@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API LINK NOTE - Documentación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f1f1f1 0%, #f7f7f7 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+        
+        .api-info {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .endpoints {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .endpoint-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .endpoint-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        
+        .get { background: #48bb78; color: white; }
+        .post { background: #4299e1; color: white; }
+        .put { background: #ed8936; color: white; }
+        .delete { background: #f56565; color: white; }
+        
+        .url {
+            font-family: 'Courier New', monospace;
+            background: #f7fafc;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .description {
+            color: #718096;
+            margin-top: 10px;
+        }
+        
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-item {
+            text-align: center;
+        }
+        
+        .footer-item h3 {
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .footer-item p {
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .copyright {
+            color: #718096;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .endpoints {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>API LINK NOTE</h1>
+            <p class="subtitle">Sistema de gestión de enlaces de tareas</p>
+        </header>
+
+        <div class="api-info">
+            <h2>📋 Información de la API</h2>
+            <p>Esta API RESTful permite gestionar enlaces/tareas.</p>
+        </div>
+
+         <div class="endpoints">
+            <!-- GET All Links -->
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Obtener todos los enlaces</strong>
+                <div class="url">/api/links</div>
+                <p class="description">Retorna todos los enlaces existentes en el sistema.</p>
+
+            </div>
+
+            <!-- GET Link by ID -->
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Obtener enlace por ID</strong>
+                <div class="url">/api/links/:id</div>
+                <p class="description">Retorna un enlace específico por su ID.</p>
+            </div>
+
+            <!-- POST Create Link -->
+            <div class="endpoint-card">
+                <span class="method post">POST</span>
+                <strong>Crear nuevo enlace</strong>
+                <div class="url">/api/links</div>
+                <p class="description">Crea un nuevo enlace en el sistema.</p>
+                <p class="description"><strong>Body:</strong> { link: "string", comment: "string", description: "string", icon: "string", group: "string" }</p>
+            </div>
+
+            <!-- PUT Update Link -->
+            <div class="endpoint-card">
+                <span class="method put">PUT</span>
+                <strong>Actualizar enlace</strong>
+                <div class="url">/api/links/:id</div>
+                <p class="description">Actualiza un enlace existente por su ID.</p>
+            </div>
+
+            <!-- DELETE Link -->
+            <div class="endpoint-card">
+                <span class="method delete">DELETE</span>
+                <strong>Eliminar enlace</strong>
+                <div class="url">/api/links/:id</div>
+                <p class="description">Elimina un enlace específico por su ID.</p>
+            </div>
+
+            <!-- Filter Endpoints -->
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Filtrar por enlace</strong>
+                <div class="url">/api/links/filter/link?link=valor</div>
+                <p class="description">Filtra enlaces por texto en la URL.</p>
+            </div>
+
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Filtrar por grupo</strong>
+                <div class="url">/api/links/filter/group?group=valor</div>
+                <p class="description">Filtra enlaces por grupo/categoría.</p>
+
+            </div>
+        </div>
+
+        <div class="endpoints">
+            <!-- GET All Notes -->
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Obtener todas las notas</strong>
+                <div class="url">/api/notes</div>
+                <p class="description">Retorna todas las notas existentes en el sistema.</p>
+
+            </div>
+
+            <!-- GET Note by ID -->
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Obtener nota por ID</strong>
+                <div class="url">/api/notes/:id</div>
+                <p class="description">Retorna una nota específica por su ID.</p>
+            </div>
+
+            <!-- POST Create Note -->
+            <div class="endpoint-card">
+                <span class="method post">POST</span>
+                <strong>Crear nueva nota</strong>
+                <div class="url">/api/notes</div>
+                <p class="description">Crea una nueva nota en el sistema.</p>
+            </div>
+
+            <!-- PUT Update Note -->
+            <div class="endpoint-card">
+                <span class="method put">PUT</span>
+                <strong>Actualizar nota</strong>
+                <div class="url">/api/notes/:id</div>
+                <p class="description">Actualiza una nota existente por su ID.</p>
+            </div>
+
+            <!-- DELETE Note -->
+            <div class="endpoint-card">
+                <span class="method delete">DELETE</span>
+                <strong>Eliminar nota</strong>
+                <div class="url">/api/notes/:id</div>
+                <p class="description">Elimina una nota específica por su ID.</p>
+            </div>
+
+            <!-- Filter Endpoints -->
+            <div class="endpoint-card">
+                <span class="method get">GET</span>
+                <strong>Filtrar por estado</strong>
+                <div class="url">/api/notes/filter-status?status=valor</div>
+                <p class="description">Filtra notas por estado (todo, in-progress, review, done).</p>
+
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-info">
+                <div class="footer-item">
+                    <h3>Nombre y Apellido</h3>
+                    <p>Veronika Chunaeva</p>
+                </div>
+                
+                <div class="footer-item">
+                    <h3>Materia</h3>
+                    <p>Aplicaciones Híbridas</p>
+                </div>
+                
+                <div class="footer-item">
+                    <h3>Docente</h3>
+                    <p>Jonathan Emanuel Cruz</p>
+                </div>
+                
+                <div class="footer-item">
+                    <h3>Comisión</h3>
+                    <p>DWT4AP</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>2025 | Da Vinci Primera Escuela de Arte Multimedia</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

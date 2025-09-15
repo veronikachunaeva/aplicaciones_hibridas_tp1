@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "LinkNote es una aplicación que combina lo mejor de un bloc de notas digital, una herramienta de organización visual estilo kanban, y un gestor de enlaces. Está diseñada para ayudarte a capturar ideas, guardar enlaces importantes, organizar tareas y gestionar tu conocimiento personal de forma clara y estructurada.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
