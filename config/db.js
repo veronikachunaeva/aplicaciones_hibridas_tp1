@@ -14,4 +14,4 @@ db.once('open', () => {
   console.log('Connection a la base de datos exitosa');
 });
 
-export default db;
+export { db }

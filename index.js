@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 import dotenv from "dotenv";
+import { db } from "./config/db.js";
 
 const app = express();
 app.use(cors());
