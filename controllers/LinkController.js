@@ -68,4 +68,70 @@ const deleteLink = async (req, res) => {
   }
 };
 
-export { createLink, getAllLinks, getLinkById, updateLink, deleteLink };
+const filterByGroup = async (req, res) => {
+  try {
+    const group = req.query.group;
+
+    if (!group || group.trim() === "") {
+      return getAllLinks(req, res);
+    }
+
+    const links = await Link.find({
+      userId: req.user.id, 
+      group: { $regex: group, $options: "i" },
+    });
+
+    if (!links || links.length === 0) {
+      return res.status(404).json({
+        msg: "No se encontraron enlaces que coincidan con el grupo.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      searchTerm: group,
+      data: links,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: "Error del servidor al buscar enlaces.",
+      error: error.message,
+    });
+  }
+};
+
+const filterByLink = async (req, res) => {
+  try {
+    const link = req.query.link;
+
+    if (!link || link.trim() === "") {
+      return getAllLinks(req, res);
+    }
+
+    const links = await Link.find({
+      userId: req.user.id,
+      link: { $regex: link, $options: "i" },
+    });
+
+    if (!links || links.length === 0) {
+      return res.status(404).json({
+        msg: "No se encontraron enlaces que coincidan con el nombre.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      searchTerm: link,
+      data: links,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: "Error del servidor al buscar enlaces.",
+      error: error.message,
+    });
+  }
+};
+
+
+
+export { createLink, getAllLinks, getLinkById, updateLink, deleteLink, filterByGroup, filterByLink };
