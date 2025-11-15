@@ -1,4 +1,5 @@
 import express from 'express';
+import { validateJWT} from '../middlewares/auth.js';
 import {
   createNote,
   getAllNotes,
@@ -10,11 +11,11 @@ import {
 
 const router = express.Router();
 
-router.post('/', createNote);
-router.get('/', getAllNotes);
-router.get('/filter-status', filterByStatus);
-router.get('/:id', getNoteById);
-router.put('/:id', updateNote);
-router.delete('/:id', deleteNote);
+router.post('/', validateJWT, createNote);
+router.get('/', validateJWT, getAllNotes);
+router.get('/filter-status', validateJWT, filterByStatus);
+router.get('/:id', validateJWT, getNoteById);
+router.put('/:id', validateJWT, updateNote);
+router.delete('/:id', validateJWT, deleteNote);
 
 export default router;

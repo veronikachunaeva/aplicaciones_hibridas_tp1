@@ -1,14 +1,15 @@
 import express from "express";
-
-const router = express.Router();
+import { validateJWT} from '../middlewares/auth.js';
 import { createLink, getAllLinks, getLinkById, updateLink, deleteLink, filterByLink, filterByGroup } from "../controllers/LinkController.js";
 
-router.get('/', getAllLinks);
-router.get('/link-filter', filterByLink);
-router.get('/group-filter', filterByGroup);
-router.get('/:id', getLinkById);
-router.post('/', createLink);
-router.put('/:id', updateLink);
-router.delete('/:id', deleteLink);
+const router = express.Router();
+
+router.get('/', validateJWT, getAllLinks);
+router.get('/link-filter', validateJWT, filterByLink);
+router.get('/group-filter', validateJWT, filterByGroup);
+router.get('/:id', validateJWT, getLinkById);
+router.post('/', validateJWT, createLink);
+router.put('/:id', validateJWT, updateLink);
+router.delete('/:id', validateJWT, deleteLink);
 
 export default router;

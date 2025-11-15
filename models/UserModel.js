@@ -8,6 +8,11 @@ const schema = new Schema({
   password: String,
   tel: String,
   avatar: String,
+  rol:{
+      type: String,
+      enum: ['cliente', 'admin'],
+      default: 'cliente'
+  },
 });
 
 const User = mongoose.model('User', schema);

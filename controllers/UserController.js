@@ -1,5 +1,7 @@
 import User from "../models/UserModel.js";
 
+const SECRET_KEY = process.env.SECRET_KEY;
+
 const createUser = async (request, response) => {
   try {
 
@@ -77,4 +79,31 @@ const deleteUser = async (request, response) => {
   }
 };
 
-export { createUser, getAllUsers, getUserById, updateUser, deleteUser };
+const authUser = async(request, response) => {
+    try {
+        const { email, password } = request.body;
+        const user = await User.findOne({email});
+        if(!user){
+            response.status(404).json({msg:'El email no existe'});
+            return;
+        }
+        const status = await bcrypt.compare(password, user.password);
+        if( !status){
+            response.status(404).json({msg: 'Contraseña invalida'});
+            return;
+        }
+        const payload = {
+            id: user._id,
+            name: user.name,
+            role: usuario.role,
+            avatar: user.avatar
+        }
+        const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
+        response.json({msg: 'Credenciales correctas', data: jwt});
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({msg: 'Tenemos un error en el servidor'});
+    }
+}
+
+export { createUser, authUser, getAllUsers, getUserById, updateUser, deleteUser };
