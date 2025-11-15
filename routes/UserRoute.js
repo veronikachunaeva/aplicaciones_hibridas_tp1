@@ -5,10 +5,10 @@ import { createUser, getAllUsers, getUserById, updateUser, deleteUser, authUser 
 
 const router = express.Router();
 router.get('/', getAllUsers);
-router.get('/:id', getUserById);
+router.get('/:id', validateJWT, getUserById);
 router.post('/', createUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.put('/:id',validateJWT, updateUser);
+router.delete('/:id', validateJWT, deleteUser);
 router.post('/auth', authUser);
 
 export default router;

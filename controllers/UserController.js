@@ -9,14 +9,24 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const createUser = async (request, response) => {
   try {
 
-    const body = request.body;
-    if (!body?.name || !body?.email || !body?.password) {
+    const { name, email, password, tel, avatar } = request.body;
+    if (!name || !email || !password) {
       return response.status(400).json(({msg: "Los campos name, email y password son obligatorios"}));
     }
-    const newUser = new User(body);
-    const user = await newUser.save(); 
+
+    const user = await User.findOne({ email });
+    if( user){
+      console.log('Email registrado');
+      response.status(400).json({msg: "El Email ya se encuentra registrado"});
+      return;
+    }
+
+    const hash = await bcrypt.hash(password, 10);
+    const userDate = { name, email, password: hash, tel, avatar }
+    const newUser = new User(userDate);
+    const savedUser = await new User.save(); 
     
-    response.status(200).json({msg: "Usuario creado exitosamente", data: user });
+    response.status(200).json({msg: "Usuario creado exitosamente", data: savedUser });
   } catch (error) {
     return response.status(500).json({ msg: "Error del servidor al crear el usuario.",msg: error.message });
   }
@@ -92,6 +102,8 @@ const authUser = async(request, response) => {
             return;
         }
         const status = await bcrypt.compare(password, user.password);
+        console.log(password, "password",  user.password, "user.password");
+        console.log(status, "status");
         if(!status){
             response.status(404).json({msg: 'Contraseña invalida'});
             return;
@@ -99,7 +111,7 @@ const authUser = async(request, response) => {
         const payload = {
             id: user._id,
             name: user.name,
-            rol: usuario.rol,
+            rol: user.rol,
             avatar: user.avatar
         }
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
