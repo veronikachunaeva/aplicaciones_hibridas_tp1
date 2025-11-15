@@ -24,7 +24,7 @@ const createUser = async (request, response) => {
     const hash = await bcrypt.hash(password, 10);
     const userDate = { name, email, password: hash, tel, avatar }
     const newUser = new User(userDate);
-    const savedUser = await new User.save(); 
+    const savedUser = await newUser.save(); 
     
     response.status(200).json({msg: "Usuario creado exitosamente", data: savedUser });
   } catch (error) {
