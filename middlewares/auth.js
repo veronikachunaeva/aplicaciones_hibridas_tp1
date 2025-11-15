@@ -18,7 +18,7 @@ const validateJWT = (request, response, next ) => {
             }
 
             request.userId = decoded.id;
-            request.role = decoded.role;
+            request.rol = decoded.rol;
         })
 
         next();

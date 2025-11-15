@@ -92,14 +92,14 @@ const authUser = async(request, response) => {
             return;
         }
         const status = await bcrypt.compare(password, user.password);
-        if( !status){
+        if(!status){
             response.status(404).json({msg: 'Contraseña invalida'});
             return;
         }
         const payload = {
             id: user._id,
             name: user.name,
-            role: usuario.role,
+            rol: usuario.rol,
             avatar: user.avatar
         }
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );

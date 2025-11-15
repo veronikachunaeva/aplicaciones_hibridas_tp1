@@ -3,9 +3,19 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  name: String,
-  email: String,
-  password: String,
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   tel: String,
   avatar: String,
   rol:{
