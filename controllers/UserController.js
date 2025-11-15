@@ -102,8 +102,6 @@ const authUser = async(request, response) => {
             return;
         }
         const status = await bcrypt.compare(password, user.password);
-        console.log(password, "password",  user.password, "user.password");
-        console.log(status, "status");
         if(!status){
             response.status(404).json({msg: 'Contraseña invalida'});
             return;
