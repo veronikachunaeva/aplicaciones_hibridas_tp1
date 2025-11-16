@@ -24,7 +24,7 @@ const validateJWT = (request, response, next) => {
 
     next(); 
   } catch (error) {
-    return response.status(403).json({ msg: "Token inválido" });
+    return response.status(403).json({ msg: `Token inválido ${error.message } ` });
   }
 };
 
