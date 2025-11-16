@@ -4,28 +4,25 @@ dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
-const validateJWT = (request, response, next ) => {
-    const token = request.headers.authorization || "";
-    if( !token){
-      return response.status(401).json({msg: 'Falta el token'});
-    }
+const validateJWT = (request, response, next) => {
+  const authHeader = request.headers.authorization || "";
 
-    try {
-        const jwt = token.startsWith("Bearer ") ? token.slice(7): null;        
-        const payload = jsonwebtoken.verify(jwt, SECRET_KEY, (error, decoded) => {
-            if( error){
-                response.status(403).json({ msg: 'Token invalido'});
-            }
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return response.status(401).json({ msg: "Falta el token" });
+  }
 
-            request.userId = decoded.id;
-            request.rol = decoded.rol;
-        })
-        req.user = { id: payload.id };
-        next();
-    } catch (error) {
-        response.status(500).json({ msg:'Error del servidor', data: []});
-        
-    }
-}
+  const token = authHeader.slice(7); 
+
+  try {
+    const payload = jsonwebtoken.verify(token, SECRET_KEY);
+
+    request.userId = payload.id;
+    request.rol = payload.rol;
+
+    next(); 
+  } catch (error) {
+    return response.status(403).json({ msg: "Token inválido" });
+  }
+};
 
 export { validateJWT };
