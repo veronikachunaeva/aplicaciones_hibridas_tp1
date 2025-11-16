@@ -16,8 +16,10 @@ const validateJWT = (request, response, next) => {
   try {
     const payload = jsonwebtoken.verify(token, SECRET_KEY);
 
-    request.userId = payload.id;
-    request.rol = payload.rol;
+    req.user = {
+    id: payload.id,
+    rol: payload.rol
+    };
 
     next(); 
   } catch (error) {
