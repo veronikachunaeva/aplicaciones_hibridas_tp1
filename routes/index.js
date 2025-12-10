@@ -1,7 +1,7 @@
 import userRoute from "./UserRoute.js";
 import linkRoute from "./LinkRoute.js";
 import noteRoute from "./NoteRoute.js";
-import categoryRoute from "./CategoryRoute.js";
+import categoryRoute from "./СategoryRoute.js";
 
 const routerApi = (app) => {
   app.use('/api/users', userRoute);
