@@ -7,7 +7,7 @@ const schema = new Schema({
   comment: String,
   description: String,
   icon: String,
-  group: String
+  categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", default: null }
 });
 
 const Link  = mongoose.model('Link', schema);
