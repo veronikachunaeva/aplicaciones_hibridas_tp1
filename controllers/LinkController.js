@@ -2,7 +2,7 @@ import Link from "../models/LinkModel.js";
 
 const createLink = async (req, res) => {
   try {
-    const { link, comment, description, icon, group } = req.body;
+    const { link, comment, description, icon, categoryId } = req.body;
 
     if (!link) {
       return res.status(400).json({ msg: "El campo link es obligatorio" });
@@ -16,7 +16,7 @@ const createLink = async (req, res) => {
       comment,
       description,
       icon,
-      group
+      categoryId: categoryId || null
     });
 
     const savedLink = await newLink.save();
