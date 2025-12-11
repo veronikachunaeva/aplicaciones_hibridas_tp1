@@ -42,6 +42,56 @@ export const getCategories = async (req, res) => {
   }
 };
 
+export const getCategory = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const category = await Category.findOne({ _id: id, userId: req.user.id });
+
+        if (!category) {
+            return res.status(404).json({ msg: "Categoría no encontrada" });
+        }
+
+        const count = await Link.countDocuments({
+            userId: req.user.id,
+            categoryId: category._id
+        });
+
+        res.status(200).json({ data: { ...category._doc, count } });
+    } catch (err) {
+        res.status(500).json({ msg: "Error al obtener la categoría", error: err.message });
+    }
+};
+
+export const updateCategory = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { name, icon, color } = req.body;
+
+        const updatedCategory = await Category.findOneAndUpdate(
+            { _id: id, userId: req.user.id },
+            { name, icon, color },
+            { new: true } 
+        );
+
+        if (!updatedCategory) {
+            return res.status(404).json({ msg: "Categoría no encontrada o no autorizada" });
+        }
+
+        const count = await Link.countDocuments({
+            userId: req.user.id,
+            categoryId: updatedCategory._id
+        });
+        
+        res.status(200).json({ 
+            msg: "Categoría actualizada", 
+            data: { ...updatedCategory._doc, count } 
+        });
+
+    } catch (err) {
+        res.status(500).json({ msg: "Error al actualizar la categoría", error: err.message });
+    }
+};
+
 export const deleteCategory = async (req, res) => {
   try {
     const id = req.params.id;
