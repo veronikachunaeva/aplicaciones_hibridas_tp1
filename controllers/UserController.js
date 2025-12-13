@@ -44,7 +44,7 @@ const getAllUsers = async (request, response) => {
   }
 };
 
-const getMyProfile = async (request, response) => {
+const getUserProfile = async (request, response) => {
   try {
     
     const user = await User.findById(request.user.id);
@@ -168,4 +168,4 @@ const authUser = async(request, response) => {
     }
 }
 
-export { createUser, getMyProfile, authUser, updateUserProfile, updateUserRole, getAllUsers, getUserById, deleteUser };
+export { createUser, getUserProfile, authUser, updateUserProfile, updateUserRole, getAllUsers, getUserById, deleteUser };

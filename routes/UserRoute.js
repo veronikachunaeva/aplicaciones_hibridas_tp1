@@ -1,12 +1,12 @@
 import express from "express";
 import { validateJWT} from '../middlewares/auth.js';
 import { isAdmin } from "../middlewares/isAdmin.js";
-import { createUser,getMyProfile, getAllUsers, getUserById, updateUserProfile, updateUserRole, deleteUser, authUser } from '../controllers/UserController.js';    
+import { createUser,getUserProfile, getAllUsers, getUserById, updateUserProfile, updateUserRole, deleteUser, authUser } from '../controllers/UserController.js';    
 
 const router = express.Router();
 router.post('/', createUser);
 router.post('/auth', authUser);
-router.get('/profile', validateJWT, getMyProfile);
+router.post('/profile', validateJWT, getUserProfile);
 router.put('/profile/edit', validateJWT, updateUserProfile);
 
 router.get('/', validateJWT, isAdmin, getAllUsers);
