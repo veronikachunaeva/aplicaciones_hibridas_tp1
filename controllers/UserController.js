@@ -44,6 +44,19 @@ const getAllUsers = async (request, response) => {
   }
 };
 
+const getMyProfile = async (request, response) => {
+  try {
+    
+    const user = await User.findById(request.user.id);
+    if (!user) {
+      return response.status(404).json({msg: "No se encontro el usuario."});
+    }
+    return response.status(200).json({data:user});
+  } catch (error) {
+    return response.status(500).json({msg: "Error del servidor al obtener el usuario.",msg: error.message});
+  }
+};
+
 const getUserById = async(request, response) => {
   try {
     const id = request.params.id;
@@ -57,16 +70,15 @@ const getUserById = async(request, response) => {
   }
 };
 
-const updateUser = async(request, response) => {
+const updateUserProfile = async(request, response) => {
   try {
-    const id = request.params.id;
     const body = request.body;
 
     if (!body?.name || !body?.email || !body?.password) {
       return response.status(400).json(({msg: "Los campos name, email y password son obligatorios"}));
     }
     
-    const user = await User.findByIdAndUpdate(id, body);
+    const user = await User.findByIdAndUpdate(request.user.id, body);
     if (!user) {
       return response.status(404).json({msg: "No se encontro el usuario."});
     }
@@ -76,6 +88,42 @@ const updateUser = async(request, response) => {
     return response.status(500).json({msg: "Error del servidor al actualizar el usuario.",msg: error.message});
   }
 }
+
+// const updateUser = async(request, response) => {
+//   try {
+//     const id = request.params.id;
+//     const body = request.body;
+
+//     if (!body?.name || !body?.email || !body?.password) {
+//       return response.status(400).json(({msg: "Los campos name, email y password son obligatorios"}));
+//     }
+    
+//     const user = await User.findByIdAndUpdate(id, body);
+//     if (!user) {
+//       return response.status(404).json({msg: "No se encontro el usuario."});
+//     }
+//     return response.status(200).json({msg: "Usuario actualizado exitosamente", data:user});
+
+//   } catch (error) {
+//     return response.status(500).json({msg: "Error del servidor al actualizar el usuario.",msg: error.message});
+//   }
+// }
+
+const updateUserRole = async (request, response) => {
+  const { rol } = request.body;
+
+  if (!["admin", "cliente"].includes(rol)) {
+    return response.status(400).json({ msg: "Rol inválido" });
+  }
+
+  const user = await User.findByIdAndUpdate(
+    request.params.id,
+    { rol },
+    { new: true }
+  );
+
+  res.json({ msg: "Rol actualizado", data: user });
+};
 
 const deleteUser = async (request, response) => {
   try {
@@ -120,4 +168,4 @@ const authUser = async(request, response) => {
     }
 }
 
-export { createUser, authUser, getAllUsers, getUserById, updateUser, deleteUser };
+export { createUser, getMyProfile, authUser, updateUserProfile, updateUserRole, getAllUsers, getUserById, deleteUser };
