@@ -1,6 +1,6 @@
 import express from "express";
 import { validateJWT} from '../middlewares/auth.js';
-import { createLink, getAllLinks, getLinkById, updateLink, deleteLink, filterByLink, filterByGroup } from "../controllers/LinkController.js";
+import { createLink, getAllLinks, getLinkById, updateLink, deleteLink, filterByLink, filterByGroup, getLinksByCategory, } from "../controllers/LinkController.js";
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router.get('/:id', validateJWT, getLinkById);
 router.post('/', validateJWT, createLink);
 router.put('/:id', validateJWT, updateLink);
 router.delete('/:id', validateJWT, deleteLink);
+router.get('/category/:categoryId', validateJWT, getLinksByCategory);
 
 export default router;

@@ -135,6 +135,48 @@ const filterByLink = async (req, res) => {
   }
 };
 
+const getLinksByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params;
+    
+    if (!categoryId) {
+      const links = await Link.find({ 
+        userId: req.user.id,
+        categoryId: null
+      });
+      return res.status(200).json({ 
+        msg: "Enlaces sin categoría obtenidos exitosamente", 
+        data: links 
+      });
+    }
+    const links = await Link.find({ 
+      userId: req.user.id,
+      categoryId: categoryId 
+    });
+
+    res.status(200).json({ 
+      msg: `Enlaces de la categoría ${categoryId} obtenidos exitosamente`, 
+      data: links,
+      count: links.length
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      msg: "Error del servidor al obtener enlaces por categoría", 
+      error: error.message 
+    });
+  }
+};
 
 
-export { createLink, getAllLinks, getLinkById, updateLink, deleteLink, filterByGroup, filterByLink };
+
+export {
+  createLink,
+  getAllLinks,
+  getLinkById,
+  updateLink,
+  deleteLink,
+  filterByGroup,
+  filterByLink,
+  getLinksByCategory
+};
