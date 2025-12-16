@@ -111,6 +111,7 @@ const updateUserProfile = async(request, response) => {
 
 const updateUserRole = async (request, response) => {
   const { rol } = request.body;
+  console.log(rol, "rol");
 
   if (!["admin", "cliente"].includes(rol)) {
     return response.status(400).json({ msg: "Rol inválido" });

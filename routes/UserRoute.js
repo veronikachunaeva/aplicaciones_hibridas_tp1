@@ -11,7 +11,7 @@ router.put('/profile/edit', validateJWT, updateUserProfile);
 
 router.get('/', validateJWT, isAdmin, getAllUsers);
 router.get('/:id', validateJWT, isAdmin, getUserById);
-router.put('/:id/edit', validateJWT, isAdmin, updateUserRole);
+router.put('/edit/:id', validateJWT, isAdmin, updateUserRole);
 router.delete('/:id', validateJWT, isAdmin, deleteUser);
 
 export default router;
