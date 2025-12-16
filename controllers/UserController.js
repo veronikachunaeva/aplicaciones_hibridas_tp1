@@ -80,9 +80,11 @@ const updateUserProfile = async(request, response) => {
     }
 
     const hash = await bcrypt.hash(password, 10);
+    console.log(hash, "hash");
     const userDate = { name, email, password: hash, tel, avatar }
     
     const user = await User.findByIdAndUpdate(request.user.id, userDate);
+    console.log(user, 'user')
     if (!user) {
       return response.status(404).json({msg: "No se encontro el usuario."});
     }
