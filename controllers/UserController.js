@@ -72,13 +72,17 @@ const getUserById = async(request, response) => {
 
 const updateUserProfile = async(request, response) => {
   try {
-    const body = request.body;
+    const { name, email, password, tel, avatar } = request.body;
+    
 
-    if (!body?.name || !body?.email || !body?.password) {
+    if (!name || !email || !password) {
       return response.status(400).json(({msg: "Los campos name, email y password son obligatorios"}));
     }
+
+    const hash = await bcrypt.hash(password, 10);
+    const userDate = { name, email, password: hash, tel, avatar }
     
-    const user = await User.findByIdAndUpdate(request.user.id, body);
+    const user = await User.findByIdAndUpdate(request.user.id, userDate);
     if (!user) {
       return response.status(404).json({msg: "No se encontro el usuario."});
     }
