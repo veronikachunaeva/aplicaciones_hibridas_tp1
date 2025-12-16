@@ -123,7 +123,7 @@ const updateUserRole = async (request, response) => {
     { new: true }
   );
 
-  res.json({ msg: "Rol actualizado", data: user });
+  response.json({ msg: "Rol actualizado", data: user });
 };
 
 const deleteUser = async (request, response) => {
