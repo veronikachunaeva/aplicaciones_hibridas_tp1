@@ -152,6 +152,7 @@ const authUser = async(request, response) => {
     try {
         const { email, password } = request.body;
         const user = await User.findOne({email});
+        console.log(user, 'user from authUser');
         if(!user){
             response.status(404).json({msg:'El email no existe'});
             return;
@@ -165,8 +166,10 @@ const authUser = async(request, response) => {
             id: user._id,
             name: user.name,
             rol: user.rol,
-            avatar: user.avatar
+            avatar: user.avatar,
+            email: user.email,
         }
+        console.log(payload, 'payload from authUser');
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
         response.json({msg: 'Credenciales correctas', data: jwt});
     } catch (error) {
