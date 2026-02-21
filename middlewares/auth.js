@@ -15,7 +15,6 @@ const validateJWT = (request, response, next) => {
 
   try {
     const payload = jsonwebtoken.verify(token, SECRET_KEY);
-    console.log(payload, "payload");
 
     request.user = {
     id: payload.id,

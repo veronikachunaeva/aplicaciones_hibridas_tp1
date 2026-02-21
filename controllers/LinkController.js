@@ -8,8 +8,6 @@ const createLink = async (req, res) => {
       return res.status(400).json({ msg: "El campo link es obligatorio" });
     }
 
-    console.log(req.user.id, "req.user.id createLink");
-
     const newLink = new Link({
       userId: req.user.id,
       link,
@@ -20,7 +18,6 @@ const createLink = async (req, res) => {
     });
 
     const savedLink = await newLink.save();
-    await console.log(savedLink, "savedLink");
 
     res.status(200).json({ msg: "Enlace creado exitosamente", data: savedLink });
   } catch (error) {

@@ -16,7 +16,6 @@ const createUser = async (request, response) => {
 
     const user = await User.findOne({ email });
     if( user){
-      console.log('Email registrado');
       response.status(400).json({msg: "El Email ya se encuentra registrado"});
       return;
     }
@@ -80,11 +79,9 @@ const updateUserProfile = async(request, response) => {
     }
 
     const hash = await bcrypt.hash(password, 10);
-    console.log(hash, "hash");
     const userDate = { name, email, password: hash, tel, avatar }
     
     const user = await User.findByIdAndUpdate(request.user.id, userDate);
-    console.log(user, 'user')
     if (!user) {
       return response.status(404).json({msg: "No se encontro el usuario."});
     }
@@ -117,7 +114,6 @@ const updateUserProfile = async(request, response) => {
 
 const updateUserRole = async (request, response) => {
   const { rol } = request.body;
-  console.log(rol, "rol");
 
   if (!["admin", "cliente"].includes(rol)) {
     return response.status(400).json({ msg: "Rol inválido" });
@@ -152,7 +148,6 @@ const authUser = async(request, response) => {
     try {
         const { email, password } = request.body;
         const user = await User.findOne({email});
-        console.log(user, 'user from authUser');
         if(!user){
             response.status(404).json({msg:'El email no existe'});
             return;
@@ -169,7 +164,6 @@ const authUser = async(request, response) => {
             avatar: user.avatar,
             email: user.email,
         }
-        console.log(payload, 'payload from authUser');
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
         response.json({msg: 'Credenciales correctas', data: jwt});
     } catch (error) {
